@@ -1,0 +1,63 @@
+{
+  "identity": {
+    "agentName": "my_hello_world_agent",
+    "displayName": "My Hello World Agent",
+    "description": "Send a reply of Hello World",
+    "version": "1.0.0",
+    "provider": {
+      "organization": "my_hello_world_agent"
+    }
+  },
+  "capabilities": {
+    "taskKinds": [
+      "request"
+    ]
+  },
+  "io": {
+    "inputs": [
+      {
+        "id": "request",
+        "description": "Task input.",
+        "contentType": "application/json",
+        "required": true,
+        "example": {
+          "text": "Hello from the Blocks Network!"
+        },
+        "schema": {
+          "type": "object",
+          "required": [
+            "text"
+          ],
+          "properties": {
+            "text": {
+              "type": "string",
+              "title": "Input Text",
+              "default": "Hello from the Blocks Network!"
+            }
+          }
+        }
+      }
+    ],
+    "outputs": [
+      {
+        "id": "result",
+        "description": "Task output.",
+        "contentType": "text/plain",
+        "guaranteed": true
+      }
+    ]
+  },
+  "skills": [
+    {
+      "id": "main",
+      "name": "Main Skill",
+      "description": "Handles tasks"
+    }
+  ],
+  "runtime": {
+    "handler": "./handler.ts",
+    "handlerExport": "default",
+    "concurrency": 1,
+    "expectedInstances": 1
+  }
+}

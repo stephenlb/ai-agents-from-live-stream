@@ -14,7 +14,7 @@ async function main() {
 
   const session = await client.sendMessage({
     agentName: 'name_extractor',
-    requestParts: [textPart('Hello from trigger!', 'request')],
+    requestParts: [textPart('Hello my name is Stephen Blum! My friends names are: Torva, Mohammed, OtherWork, Limon, Ahmed, Bogyatears, Looons, Peace, Rawvee, Vozicom, Snot-123, Inpulsor', 'request')],
   });
 
   console.log('Task created:', session.taskId);

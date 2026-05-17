@@ -1,0 +1,7 @@
+handler.py
+pyproject.toml
+gemma_4_llm.egg-info/PKG-INFO
+gemma_4_llm.egg-info/SOURCES.txt
+gemma_4_llm.egg-info/dependency_links.txt
+gemma_4_llm.egg-info/requires.txt
+gemma_4_llm.egg-info/top_level.txt

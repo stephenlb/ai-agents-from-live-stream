@@ -1,0 +1,6 @@
+Metadata-Version: 2.4
+Name: gemma_4_llm
+Version: 1.0.0
+Summary: gemma_4_llm agent
+Requires-Python: >=3.12
+Requires-Dist: blocks-network

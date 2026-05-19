@@ -1,0 +1,12 @@
+{
+  "name": "name_extractor_node",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node extract_names.js"
+  },
+  "dependencies": {
+    "openai": "^6.37.0"
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "name": "name_extractor",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "name-extractor",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "1f1a2b3c-1111-4111-8111-111111111111",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "name-extractor"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/responses",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"gpt-5.5\",\n  \"input\": {{ JSON.stringify($json.body?.text ?? $json.text ?? '') }},\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"extract_names\",\n      \"description\": \"Extract all names in the user message and return list array of names.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"names\": {\n            \"type\": \"array\",\n            \"description\": \"Full name of a person, place or thing.\",\n            \"items\": {\n              \"type\": \"string\",\n              \"description\": \"The name of the person, place or thing.\"\n            }\n          }\n        },\n        \"required\": [\"names\"]\n      }\n    }\n  ],\n  \"tool_choice\": { \"type\": \"function\", \"name\": \"extract_names\" }\n}",
+        "options": {}
+      },
+      "id": "2f2a2b3c-2222-4222-8222-222222222222",
+      "name": "OpenAI Extract Names",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [520, 300],
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "names",
+              "value": "={{ JSON.parse($json.output[0].arguments).names.join(', ') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3f3a2b3c-3333-4333-8333-333333333333",
+      "name": "Format Names",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.names }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/plain"
+              }
+            ]
+          }
+        }
+      },
+      "id": "4f4a2b3c-4444-4444-8444-444444444444",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1080, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Extract Names",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Extract Names": {
+      "main": [
+        [
+          {
+            "node": "Format Names",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Names": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "active": false,
+  "versionId": "00000000-0000-4000-8000-000000000001",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

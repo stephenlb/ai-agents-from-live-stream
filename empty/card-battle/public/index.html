@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Card Battle</title>
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Card Battle</h1>
+    <div class="controls">
+      <span id="status" class="status">Choose your attacker</span>
+      <button id="new-game">New Game</button>
+    </div>
+  </header>
+
+  <main class="board">
+    <section class="side opponent">
+      <h2>Opponent</h2>
+      <div class="hand" id="opponent-hand"></div>
+    </section>
+
+    <section class="arena">
+      <div class="slot" id="opponent-slot" data-side="opponent"></div>
+      <div class="vs">VS</div>
+      <div class="slot" id="player-slot" data-side="player"></div>
+      <button id="attack-btn" disabled>Attack</button>
+    </section>
+
+    <section class="side player">
+      <h2>You</h2>
+      <div class="hand" id="player-hand"></div>
+    </section>
+  </main>
+
+  <aside class="log" id="log" aria-live="polite"></aside>
+
+  <script type="module" src="./js/game.js"></script>
+</body>
+</html>

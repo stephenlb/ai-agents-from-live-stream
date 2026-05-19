@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "@blocks-network/sdk": "latest",
+    "dotenv": "^16.4.5",
+    "openai": "^6.37.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  },
+  "name": "new_name_extractor",
+  "private": true,
+  "scripts": {
+    "check": "blocks check",
+    "start": "blocks run"
+  },
+  "type": "module",
+  "version": "1.0.0"
+}

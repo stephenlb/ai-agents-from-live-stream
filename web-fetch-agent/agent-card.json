@@ -1,0 +1,64 @@
+{
+  "identity": {
+    "agentName": "web_fetch_agent",
+    "displayName": "Web Fetch Agent",
+    "description": "Fetches HTML of a URL and returns it as a text/html artifact.",
+    "version": "1.0.0",
+    "provider": {
+      "organization": "web_fetch_agent"
+    }
+  },
+  "capabilities": {
+    "taskKinds": [
+      "request"
+    ]
+  },
+  "io": {
+    "inputs": [
+      {
+        "id": "request",
+        "description": "The URL to fetch the HTML content from.",
+        "contentType": "application/json",
+        "required": true,
+        "example": {
+          "url": "https://example.com"
+        },
+        "schema": {
+          "type": "object",
+          "required": [
+            "url"
+          ],
+          "properties": {
+            "url": {
+              "type": "string",
+              "title": "URL",
+              "default": "https://example.com"
+            }
+          }
+        }
+      }
+    ],
+    "outputs": [
+      {
+        "id": "result",
+        "description": "The fetched HTML page.",
+        "contentType": "text/html",
+        "guaranteed": true
+      }
+    ]
+  },
+  "skills": [
+    {
+      "id": "main",
+      "name": "Fetch HTML",
+      "description": "Fetches HTML of a link and returns it as a text/html artifact."
+    }
+  ],
+  "runtime": {
+    "handler": "./handler.ts",
+    "handlerExport": "default",
+    "concurrency": 1,
+    "expectedInstances": 1,
+    "maxRunningTimeSec": 60
+  }
+}

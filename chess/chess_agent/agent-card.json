@@ -1,0 +1,87 @@
+{
+  "identity": {
+    "agentName": "chess_agent",
+    "displayName": "Chess Stockfish Agent",
+    "description": "An agent that plays chess using the Stockfish AI engine.",
+    "version": "1.0.0",
+    "provider": {
+      "organization": "chess_agent"
+    }
+  },
+  "capabilities": {
+    "taskKinds": [
+      "request"
+    ]
+  },
+  "io": {
+    "inputs": [
+      {
+        "id": "request",
+        "description": "Current chess position and difficulty.",
+        "contentType": "application/json",
+        "required": true,
+        "example": {
+          "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "difficulty": 10
+        },
+        "schema": {
+          "type": "object",
+          "required": [
+            "fen"
+          ],
+          "properties": {
+            "fen": {
+              "type": "string",
+              "title": "FEN Position",
+              "default": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+            },
+            "difficulty": {
+              "type": "integer",
+              "title": "Difficulty (Stockfish Depth)",
+              "default": 10
+            }
+          }
+        }
+      }
+    ],
+    "outputs": [
+      {
+        "id": "result",
+        "description": "Calculated best move and position details.",
+        "contentType": "application/json",
+        "guaranteed": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "bestMove": {
+              "type": "string",
+              "title": "Best Move (UCI)"
+            },
+            "fen": {
+              "type": "string",
+              "title": "Updated FEN"
+            },
+            "evaluation": {
+              "type": "string",
+              "title": "Position Evaluation"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "skills": [
+    {
+      "id": "main",
+      "name": "Play Chess Move",
+      "description": "Calculates the best chess move for a given position using Stockfish."
+    }
+  ],
+  "runtime": {
+    "handler": "./handler.ts",
+    "handlerExport": "default",
+    "concurrency": 5,
+    "expectedInstances": 1,
+    "maxRunningTimeSec": 120
+  }
+}

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aether Chess - Stockfish AI Agent</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="background-glow">
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+  </div>
+
+  <div class="app-container">
+    <header class="app-header">
+      <div class="brand">
+        <span class="logo-icon">♟</span>
+        <h1>AETHER CHESS</h1>
+        <span class="badge">Blocks AI Agent</span>
+      </div>
+      <div class="status-indicator" id="connection-status">
+        <span class="status-dot"></span>
+        <span class="status-text">Connected</span>
+      </div>
+    </header>
+
+    <main class="dashboard-grid">
+      <!-- Left column: Settings & Status -->
+      <section class="control-panel glass-card">
+        <h2>Game Settings</h2>
+        
+        <div class="settings-group">
+          <label for="play-side">Play As</label>
+          <div class="radio-toggle">
+            <input type="radio" id="side-white" name="play-side" value="w" checked>
+            <label for="side-white">White</label>
+            
+            <input type="radio" id="side-black" name="play-side" value="b">
+            <label for="side-black">Black</label>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <div class="label-with-value">
+            <label for="difficulty-slider">AI Difficulty (Depth)</label>
+            <span id="difficulty-val" class="value-display">10</span>
+          </div>
+          <input type="range" id="difficulty-slider" min="1" max="18" value="10" class="slider">
+          <div class="slider-labels">
+            <span>Easy (1)</span>
+            <span>Master (18)</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="btn-restart" class="btn btn-primary">
+            <span class="btn-icon">↺</span> New Game
+          </button>
+        </div>
+
+        <hr class="divider">
+
+        <h2>Game Stats</h2>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-label">Opponent</span>
+            <span class="stat-value text-glow">Stockfish 16</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Active Color</span>
+            <span id="active-turn" class="stat-value">White</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Moves</span>
+            <span id="move-count" class="stat-value">0</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Status</span>
+            <span id="game-status" class="stat-value text-accent">Ready</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Center column: Board & Evaluation -->
+      <section class="board-area">
+        <!-- Evaluation bar -->
+        <div class="evaluation-container glass-card">
+          <div class="eval-bar-wrapper">
+            <div id="eval-bar" class="eval-bar" style="height: 50%;"></div>
+          </div>
+          <span id="eval-text" class="eval-text">0.00</span>
+        </div>
+
+        <!-- Chessboard container -->
+        <div class="board-container glass-card">
+          <div id="chessboard" class="chessboard">
+            <!-- Squares generated dynamically via JS -->
+          </div>
+          <div id="board-overlay" class="board-overlay hidden">
+            <div class="overlay-content">
+              <h3 id="overlay-title">Checkmate</h3>
+              <p id="overlay-msg">Stockfish wins!</p>
+              <button id="btn-overlay-restart" class="btn btn-primary">Play Again</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right column: Move Log -->
+      <section class="move-log glass-card">
+        <h2>Move History</h2>
+        <div class="move-list-wrapper">
+          <table class="move-table">
+            <thead>
+              <tr>
+                <th style="width: 20%;">#</th>
+                <th style="width: 40%;">White</th>
+                <th style="width: 40%;">Black</th>
+              </tr>
+            </thead>
+            <tbody id="move-history-body">
+              <!-- Moves generated dynamically -->
+            </tbody>
+          </table>
+        </div>
+        <div class="log-console">
+          <div class="console-header">Agent Activity Logs</div>
+          <div id="console-output" class="console-output">
+            <div class="log-line system">Waiting to start...</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>Powered by the <strong>Blocks Node SDK</strong> and <strong>Stockfish WASM</strong>.</p>
+    </footer>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
